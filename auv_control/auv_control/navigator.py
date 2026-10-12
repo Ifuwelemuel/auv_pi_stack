@@ -40,6 +40,7 @@ import math
 
 import rclpy
 from rclpy.clock import Clock, ClockType
+from rclpy.qos import qos_profile_sensor_data
 from geometry_msgs.msg import PointStamped
 from rclpy.node import Node
 from sensor_msgs.msg import NavSatFix, NavSatStatus
@@ -61,6 +62,7 @@ class Navigator(Node):
         self.declare_parameter('mission_file', '')
         self.declare_parameter('rate_hz', 5.0)
         self.declare_parameter('fix_timeout_s', 3.0)      # GPS ~1 Hz
+        self.declare_parameter('gps_topic', '/mavros/global_position/raw/fix')
         path = self.get_parameter('mission_file').value
         if not path:
             raise RuntimeError('mission_file parameter is required.')
@@ -77,7 +79,12 @@ class Navigator(Node):
         self._t0 = None
         self._cross = 0.0
 
-        self.create_subscription(NavSatFix, '/gps/fix', self._on_fix, 10)
+        #self.create_subscription(NavSatFix, '/gps/fix', self._on_fix, 10)
+        # Best-effort subscriber: receives from mavros (best-effort) AND from
+        # gps_node (reliable). A reliable subscriber would get nothing from mavros.
+        gps_topic = self.get_parameter('gps_topic').value
+        self.create_subscription(NavSatFix, gps_topic, self._on_fix,
+                                 qos_profile_sensor_data)
         self._pub = {n: self.create_publisher(Float32, f'/autopilot/{n}_setpoint', 10)
                      for n in ('heading', 'surge', 'depth')}
         self._hb_pub = self.create_publisher(Header, '/heartbeat', COMMAND)

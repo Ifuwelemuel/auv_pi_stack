@@ -61,3 +61,4 @@ navigator:
   ros__parameters:
     rate_hz: 5.0
     fix_timeout_s: 3.0
+    gps_topic: /mavros/global_position/raw/fix

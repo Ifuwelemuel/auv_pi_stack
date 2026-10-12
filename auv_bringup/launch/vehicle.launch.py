@@ -36,6 +36,7 @@ RECORD_TOPICS = [
     '/mavros/mavros/data', '/mavros/mavros/data_raw', '/mavros/mavros/mag',
     '/mavros/imu/data', '/mavros/imu/data_raw', '/mavros/imu/mag',
     '/mavros/state', '/mavros/battery',
+    '/mavros/global_position/raw/fix', '/mavros/global_position/raw/satellites',
 ]
 
 
@@ -120,6 +121,11 @@ def generate_launch_description():
         ('local_joy', 'false', 'run joy_node on the Pi (gamepad plugged in)'),
         ('fcu_url', '/dev/pixhawk:115200', 'Pixhawk serial device:baud'),
         ('gcs_url', '', 'optional QGC forwarding, e.g. udp://@<laptop-ip>:14550'),
+        ('gps', 'false', 'gps_node on the Pi UART (only if the buoy GPS is wired to '
+                         'the Pi instead of the Pixhawk)'),
+        ('fcu_url', '/dev/serial0:921600',
+         'Pixhawk link: Pi UART to TELEM2 (or /dev/pixhawk:115200 over USB)'),
+
     ]
     return LaunchDescription(
         [DeclareLaunchArgument(n, default_value=d, description=h) for n, d, h in args]
