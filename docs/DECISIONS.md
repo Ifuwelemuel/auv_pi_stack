@@ -148,3 +148,20 @@ You re-tune often; you re-calibrate only when hardware changes.
 - **Fins, servo ranges, ballast, BTS7960** (ADR-004, ADR-013) — hardware gone.
 - **Jetson L4T package holds** (ADR-010) — no Jetson.
 - **Two-machine networking and chrony** (ADR-018) — see D2.
+
+### D16 — Timeouts run on the monotonic clock
+*New in v2, found on first boot.*
+
+The Pi has no battery-backed clock: it booted three months behind, and NTP
+steps it when the Pi gets internet. Every staleness check (watchdog, mixer
+source ages, driver command timeout, autopilot sensor/setpoint ages,
+navigator GPS age and mission timer) uses `ClockType.STEADY_TIME`, which
+never jumps. In simulation, a backward clock step at the moment the gamepad
+dropped left the vehicle driving at 60% surge with the watchdog blind; with
+the monotonic clock it stops within 0.35 s. Message stamps still use ROS
+time, so set the clock (`timedatectl`) before recording bags.
+
+### D17 — No automatic updates on the vehicle
+`unattended-upgrades` upgraded mavros without libmavconn and broke mavros.
+Automatic updates are disabled; update deliberately, on the bench, all ROS
+packages at once.

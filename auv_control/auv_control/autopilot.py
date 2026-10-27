@@ -32,6 +32,7 @@ re-sends at 5 Hz and that would make the I-term useless.
 import math
 
 import rclpy
+from rclpy.clock import Clock, ClockType
 from rclpy.node import Node
 from rclpy.qos import qos_profile_sensor_data
 from sensor_msgs.msg import Imu

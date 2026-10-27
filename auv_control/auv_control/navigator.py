@@ -39,6 +39,7 @@ Mission YAML (config/missions/*.yaml):
 import math
 
 import rclpy
+from rclpy.clock import Clock, ClockType
 from geometry_msgs.msg import PointStamped
 from rclpy.node import Node
 from sensor_msgs.msg import NavSatFix, NavSatStatus

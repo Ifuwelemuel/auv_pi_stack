@@ -13,7 +13,7 @@
   <depend>std_srvs</depend>
   <depend>auv_interfaces</depend>
   <exec_depend>python3-serial</exec_depend>
-  <!-- smbus2 and pynmea2: pip install --user smbus2 pynmea2 (see README) -->
+  <!-- smbus2 and pynmea2 come from pip, see README -->
 
   <test_depend>python3-pytest</test_depend>
 

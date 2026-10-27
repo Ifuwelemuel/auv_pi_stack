@@ -15,6 +15,7 @@ Clamps each axis to its limit here — the last stage that still deals in
 normalised intent.
 """
 import rclpy
+from rclpy.clock import Clock, ClockType
 from rclpy.node import Node
 from std_msgs.msg import Bool
 

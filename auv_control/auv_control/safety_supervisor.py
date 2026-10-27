@@ -22,6 +22,7 @@ stamps). Safe = all thrusters stopped; the vehicle is trimmed positively
 buoyant, so stopped means it floats up (D1).
 """
 import rclpy
+from rclpy.clock import Clock, ClockType
 from rclpy.node import Node
 from rclpy.time import Time
 from std_msgs.msg import Bool, Header
