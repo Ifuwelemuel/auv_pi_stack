@@ -1,0 +1,15 @@
+# mavros: Pixhawk (ArduSub) over USB, used as IMU + compass ONLY (D9).
+# Same settings as v1, which were validated on this Pixhawk.
+/**:
+  ros__parameters:
+    system_id: 255
+    component_id: 1
+    target_system_id: 1
+    target_component_id: 1
+    plugin_allowlist:
+      - sys_status
+      - imu
+      - global_position
+      - local_position
+      - rc_io
+      - command

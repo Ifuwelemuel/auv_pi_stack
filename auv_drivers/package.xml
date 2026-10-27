@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>auv_drivers</name>
+  <version>2.0.0</version>
+  <description>Hardware drivers: PCA9685 thrusters, Bar02 depth, serial GPS.</description>
+  <maintainer email="lemuelossaiifuwe@gmail.com">Lemuel Ossai Ifuwe</maintainer>
+  <license>MIT</license>
+
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_srvs</depend>
+  <depend>auv_interfaces</depend>
+  <exec_depend>python3-serial</exec_depend>
+  <!-- smbus2 and pynmea2: pip install --user smbus2 pynmea2 (see README) -->
+
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

@@ -1,0 +1,4 @@
+# udev rules: stable device names for the vehicle Pi.
+#   sudo cp scripts/99-auv.rules /etc/udev/rules.d/ && sudo udevadm control --reload && sudo udevadm trigger
+# Check IDs with `lsusb` — Pixhawk 2.4.8 (PX4 FMUv2/v3 bootloader) is usually 26ac:0011.
+SUBSYSTEM=="tty", ATTRS{idVendor}=="26ac", ATTRS{idProduct}=="0011", SYMLINK+="pixhawk", MODE="0666"

@@ -1,0 +1,15 @@
+# Local-frame test mission: east/north metres from wherever the first fix
+# lands. Handy for a first open-water run without looking up coordinates.
+mission:
+  frame: local
+  waypoints:            # [east_m, north_m]
+    - [10.0, 0.0]
+    - [10.0, 10.0]
+    - [0.0, 10.0]
+    - [0.0, 0.0]
+  acceptance_radius_m: 3.0
+  mission_timeout_s: 300.0
+  geofence: {east_min: -25.0, east_max: 35.0, north_min: -25.0, north_max: 35.0}
+  cruise_thrust: 0.3
+  lookahead_m: 4.0
+  depth_m: 0.0
