@@ -1,5 +1,14 @@
 # auv_pi_stack
 
+<p align="center">
+  <a href="docs/media/auv_cad_walkthrough.mp4">
+    <img src="docs/media/auv_cad_orbit.gif" width="85%" alt="Orbit around the SolidWorks model of the AUV: nose section, clear centre hull, tail fins and stern thruster">
+  </a>
+</p>
+<p align="center">
+  <sub>CAD model of the vehicle · <a href="docs/media/auv_cad_walkthrough.mp4">watch the full 48 s walkthrough</a> · <a href="#the-vehicle">photos of the build ↓</a></sub>
+</p>
+
 ROS 2 (Humble) stack for a low-cost AUV: one Raspberry Pi 4, a Pixhawk as
 sensor hub and thruster PWM output stage, a PCA9685 for fin servos, a Bar02
 depth sensor and a GPS on a tethered surface buoy. Two interchangeable
@@ -13,6 +22,29 @@ MSc dissertation project, Sheffield Hallam University. This is **v2**: a
 fresh workspace for the Pi + three-thruster vehicle. The v1 stack
 (`auv_stack`, Jetson + fins + ballast) stays as the record of the first water
 tests; what was learned there is kept in [`docs/DECISIONS.md`](docs/DECISIONS.md).
+
+---
+
+## The vehicle
+
+<table>
+  <tr>
+    <td colspan="2" align="center">
+      <img src="docs/media/auv_cad_side.jpg" width="100%" alt="Side view of the SolidWorks model">
+      <br><sub><b>Design</b> · SolidWorks model: nose section, clear centre pressure hull, tail with + fins and the stern thruster</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <img src="docs/media/auv_hull_assembled.jpg" width="100%" alt="The assembled 3D-printed hull on a workshop bench">
+      <br><sub><b>Build</b> · the 3D-printed hull assembled, red nose cone forward and thruster guard aft</sub>
+    </td>
+    <td width="50%" align="center" valign="top">
+      <img src="docs/media/auv_bench_integration.jpg" width="100%" alt="Hull sections opened on the bench with the wiring harness and bench power supply">
+      <br><sub><b>Integration</b> · hull split open on the bench while the electronics and wiring go in</sub>
+    </td>
+  </tr>
+</table>
 
 ---
 
@@ -124,7 +156,9 @@ auv_ws/src/auv_pi_stack/
 ├── pixhawk/            auv_watchdog.lua (goes on the Pixhawk SD card) + its off-board test
 ├── scripts/            esc_calibrate.py (any PCA9685 channel: fins too), aux_jog.py (one Pixhawk
 │                       AUX by hand), bar02_test.py, i2c_check.sh, kill_stack.sh, 99-auv.rules
-└── docs/DECISIONS.md   why things are the way they are
+└── docs/
+    ├── DECISIONS.md    why things are the way they are
+    └── media/          CAD renders, build photos and the CAD walkthrough video
 ```
 
 ---
