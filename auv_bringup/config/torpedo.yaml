@@ -1,0 +1,81 @@
+# TORPEDO configuration (D19): stern T200 + four fin servos in a + layout.
+#
+#     ros2 launch auv_bringup vehicle.launch.py config:=torpedo
+#
+# Loaded AFTER calibration.yaml and vehicle.yaml, so only the keys below
+# change. The stern T200 (surge_*) keeps its settings from calibration.yaml:
+# Pixhawk AUX3, behind the Pixhawk watchdog. The fins are on the PCA9685:
+#
+#     PCA ch0  top fin      rudder    yaw
+#     PCA ch1  bottom fin   rudder    yaw
+#     PCA ch2  left fin     elevator  pitch
+#     PCA ch3  right fin    elevator  pitch
+#
+# Servo power: a 5-6 V BEC into the PCA9685's V+ terminal (the servo rail),
+# sized for all four servos at stall. NOT the Pi's 5 V; the PCA's VCC pin
+# stays on the Pi's 3.3 V as now. Grounds common.
+#
+# No watchdog on the PCA9685: if the Pi dies the fins hold their last angle.
+# The thruster is still stopped by the Pixhawk within 0.3 s, and a fin does
+# nothing without flow, so the vehicle stops and floats up (D1, D19).
+#
+# Every fin's pulse: centre_us + sign * command * span_us, then clamped to
+# min_us..max_us (its mechanical limits). All *_us values are PLACEHOLDERS
+# until measured (README "Torpedo configuration"). Whole numbers only.
+#
+# Directions (set each *_sign on the bench, propeller off):
+#   left stick LEFT   (yaw +, nose left)   -> top and bottom fin trailing
+#                                             edges swing to the vehicle's LEFT
+#   right stick PUSH  (pitch +, nose down) -> left and right fin trailing
+#                                             edges move DOWN
+
+thruster_driver:
+  ros__parameters:
+    outputs: [surge, fin_top, fin_bottom, fin_left, fin_right]
+
+    fin_top_kind: servo
+    fin_top_stage: pca9685
+    fin_top_channel: 0
+    fin_top_input: yaw
+    fin_top_sign: 1
+    fin_top_center_us: 1500     # fin straight
+    fin_top_span_us: 300        # pulse change at full command
+    fin_top_min_us: 1200        # mechanical limits: never driven past these
+    fin_top_max_us: 1800
+
+    fin_bottom_kind: servo
+    fin_bottom_stage: pca9685
+    fin_bottom_channel: 1
+    fin_bottom_input: yaw
+    fin_bottom_sign: 1
+    fin_bottom_center_us: 1500
+    fin_bottom_span_us: 300
+    fin_bottom_min_us: 1200
+    fin_bottom_max_us: 1800
+
+    fin_left_kind: servo
+    fin_left_stage: pca9685
+    fin_left_channel: 2
+    fin_left_input: pitch
+    fin_left_sign: 1
+    fin_left_center_us: 1500
+    fin_left_span_us: 300
+    fin_left_min_us: 1200
+    fin_left_max_us: 1800
+
+    fin_right_kind: servo
+    fin_right_stage: pca9685
+    fin_right_channel: 3
+    fin_right_input: pitch
+    fin_right_sign: 1
+    fin_right_center_us: 1500
+    fin_right_span_us: 300
+    fin_right_min_us: 1200
+    fin_right_max_us: 1800
+
+autopilot:
+  ros__parameters:
+    # Fins only steer while the vehicle moves: no turning on the spot.
+    pivot_error_rad: 0.0
+    # Heading and depth gains carry over from vehicle.yaml as starting
+    # points only; fin authority grows with speed squared. Tune in water.

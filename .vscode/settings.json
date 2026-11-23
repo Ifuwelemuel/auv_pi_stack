@@ -1,0 +1,26 @@
+{
+    "cmake.sourceDirectory": "/home/raspberry/auv_ws/src/auv_pi_stack/auv_interfaces",
+    "ROS2.distro": "humble",
+    "python.autoComplete.extraPaths": [
+        "/home/raspberry/auv_ws/build/auv_bringup",
+        "/home/raspberry/auv_ws/install/auv_bringup/lib/python3.10/site-packages",
+        "/home/raspberry/auv_ws/build/auv_drivers",
+        "/home/raspberry/auv_ws/install/auv_drivers/lib/python3.10/site-packages",
+        "/home/raspberry/auv_ws/build/auv_control",
+        "/home/raspberry/auv_ws/install/auv_control/lib/python3.10/site-packages",
+        "/home/raspberry/auv_ws/install/auv_interfaces/local/lib/python3.10/dist-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/raspberry/auv_ws/build/auv_bringup",
+        "/home/raspberry/auv_ws/install/auv_bringup/lib/python3.10/site-packages",
+        "/home/raspberry/auv_ws/build/auv_drivers",
+        "/home/raspberry/auv_ws/install/auv_drivers/lib/python3.10/site-packages",
+        "/home/raspberry/auv_ws/build/auv_control",
+        "/home/raspberry/auv_ws/install/auv_control/lib/python3.10/site-packages",
+        "/home/raspberry/auv_ws/install/auv_interfaces/local/lib/python3.10/dist-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ]
+}

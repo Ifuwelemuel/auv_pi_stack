@@ -1,0 +1,74 @@
+# MEASURED hardware values. Not tuning — these describe THIS hardware.
+# Re-measure when a part is swapped (see README "Calibration").
+
+thruster_driver:
+  ros__parameters:
+    # Where the pulses go (D18):
+    #   pixhawk  Pixhawk AUX1-3 + pixhawk/auv_watchdog.lua (crystal-timed, and
+    #            the Pixhawk stops the ESCs itself if the Pi goes quiet)
+    #   pca9685  the PCA9685 board (drifts, holds last pulse; fallback only)
+    output: pixhawk
+    esc_arm_hold_s: 2.0
+    cmd_timeout_s: 0.5
+
+    # --- output: pixhawk ------------------------------------------------
+    toggle_rc: 16              # must equal AUVW_TOG_RC on the Pixhawk
+    watchdog_check: true       # refuse to start unless the Pixhawk failsafe
+                               # stops equal the *_stop_us below. Never false
+                               # with props on.
+    watchdog_wait_s: 10.0      # how long to wait for mavros at start-up
+
+    # --- output: pca9685 ------------------------------------------------
+    i2c_bus: 1                 # Pi header I2C (pins 3/5). Pi is the only master (D3)
+    i2c_addr: 0x40
+    oscillator_hz: 28730000    # PCA9685 board, MEASURED 19 Aug 2026 (D5)
+    pwm_freq_hz: 50
+
+    # Per ESC. *_aux = Pixhawk AUX output (1..3), *_channel = PCA9685 channel.
+    # *_stop_us MUST equal AUVW_STOPn on the Pixhawk for that AUX output
+    # (the driver checks at start-up). The Pixhawk's PWM is crystal-timed, so
+    # a T200 Basic ESC stops at its nominal 1500 us; confirm each ESC by ear:
+    # no creep, no hum at stop.
+
+    # Stern T200 + Basic ESC (bidirectional). sign -1 carried over from v1.
+    surge_aux: 3
+    surge_channel: 2
+    surge_stop_us: 1500
+    surge_span_us: 400
+    surge_sign: -1
+    surge_bidirectional: true
+
+    # Generic thruster, FORWARD-ONLY ESC. stop = its minimum throttle.
+    # sign +1 if its push makes the nose go DOWN, -1 if UP. If you set -1,
+    # also set autopilot depth_out_min: -1.0, depth_out_max: 0.0.
+    pitch_aux: 2
+    pitch_channel: 1
+    pitch_stop_us: 1500
+    pitch_span_us: 400
+    pitch_sign: 1
+    pitch_bidirectional: true
+
+    # Lateral T200 + Basic ESC (bidirectional).
+    # sign +1 if a positive command turns the nose LEFT (CCW seen from above).
+    yaw_aux: 1
+    yaw_channel: 0
+    yaw_stop_us: 1500
+    yaw_span_us: 400
+    yaw_sign: 1
+    yaw_bidirectional: true
+
+depth_sensor:
+  ros__parameters:
+    i2c_bus: 1
+    fluid_density: 997.0       # fresh water; sea ~1025
+    rate_hz: 10.0
+    max_failures: 5
+
+gps_node:
+  ros__parameters:
+    port: /dev/ttyUSB0         # USB-serial adapter. NOT /dev/serial0: that UART is the
+                               # Pixhawk TELEM2 link now. Off by default (gps:=false).
+    baud: 9600
+    frame_id: gps_buoy
+    base_accuracy_m: 2.5       # refine from a static scatter test
+    status_every: 10

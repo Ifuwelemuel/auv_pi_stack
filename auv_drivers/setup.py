@@ -4,7 +4,7 @@ package_name = 'auv_drivers'
 
 setup(
     name=package_name,
-    version='0.0.0',
+    version='2.0.0',
     packages=find_packages(exclude=['test']),
     data_files=[
         ('share/ament_index/resource_index/packages',
@@ -13,17 +13,17 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='raspberry',
+    maintainer='lemuel ossai Ifuwe',
     maintainer_email='ifuwelemuel123@gmail.com',
-    description='TODO: Package description',
-    license='TODO: License declaration',
-    extras_require={
-        'test': [
-            'pytest',
-        ],
-    },
+    description='Hardware drivers: PCA9685 thrusters, Bar02 depth, serial GPS.',
+    license='MIT',
+    tests_require=['pytest'],
+
     entry_points={
         'console_scripts': [
+            'thruster_driver = auv_drivers.thruster_driver:main',
+            'depth_sensor = auv_drivers.depth_sensor:main',
+            'gps_node = auv_drivers.gps_node:main',
         ],
     },
 )
